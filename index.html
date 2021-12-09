@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> SEBPO AccuWeather Team Code PreProcessor </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- customized style -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <div class="grid-container">
+        <header class="header">
+            <h2>SEBPO AccuWeather Team Script PreProcessor</h2>
+        </header>
+        <main class="main">
+            <div class="content">
+                <div class="wrapper">
+                    <div class="form-group">
+                        <h3> Html Input </h3>
+                        <textarea class="form-control" id="htmlInput" rows="5"></textarea>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <h3> Css Input </h3>
+                        <textarea class="form-control" id="cssInput" rows="8"></textarea>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <h3> Line item name </h3>
+                        <input class="form-control" id="lineItemName">
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div>
+                        <h3> Type of Script </h3>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scriptTypeRadioOptions" id="basicScript"
+                                value="basicScript" checked>
+                            <label class="form-check-label" for="inlineRadio1">Basic Script</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scriptTypeRadioOptions"
+                                id="scriptWithAnimation" value="scriptWithAnimation">
+                            <label class="form-check-label" for="inlineRadio2"> Script with Animation </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="scriptTypeRadioOptions"
+                                id="scriptWithCarousel" value="scriptWithCarousel">
+                            <label class="form-check-label" for="inlineRadio2"> Script with Carousel </label>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <textarea class="form-control" id="carouselScriptInput" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <h3> Additional Script (if any) </h3>
+                        <textarea class="form-control" id="scriptInput" rows="1"></textarea>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <h3> API code only If any </h3>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="apiType" id="scaleAPI"
+                                value="scaleAPI">
+                            <label class="form-check-label" for="inlineRadio1">Scale Index API</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="apiType" id="currentWeather"
+                                value="currentWeather">
+                            <label class="form-check-label" for="inlineRadio1">Current Weather API</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="apiType" id="noapi"
+                                value="noapi" checked>
+                            <label class="form-check-label" for="inlineRadio1">No API</label>
+                        </div>
+                        <hr />
+                        <textarea class="form-control" id="apiScriptInput" rows="3"></textarea>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <h3> Server Path (if any) </h3>
+                        <input class="form-control" id="serverPath">
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+            <div class="container containerForOutput">
+                <div class="form-group">
+                    <!-- <h3> Prepared Script </h3> -->
+                    <textarea class="form-control" id="output" rows="5"></textarea>
+                </div>
+                <br />
+                <button class="button btnFade btnBlueGreen" id="getResult" onclick="showResult()">Generate
+                    Script</button>
+                <button class="button btnFade btnBlueGreen"
+                    onclick="document.getElementById('output').select();document.execCommand('copy')">
+                    Copy
+                </button>
+                <button class="button btnFade btnBlueGreen" id="saveAsLocalFile">Local html</button>
+                <button class="button btnFade btnBlueGreen" id="saveAsDeliverableFile">Deliverable HTML</button>
+                <div class="clear"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            tajulmbstu@gmail.com
+        </footer>
+    </div>
+    <!-- scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <!-- customized script -->
+    <noscript id="bannerWithAnimationWithCarouselScript">
+        // click tag url
+        const clickTagURL = `%%CLICK_URL_UNESC%%https://www.google.com/`;
+
+        const unitLineItemName = ``
+        // server path variable. 
+        const awServerPath = ``; //set empty for local path
+        // banner Wrapper element name
+        const bannerWrapperName = `banner-item`;
+        // click tag applied element ID
+        const clickTagOnElementID = `banner-item`;
+        // array of library script if needed
+        const arrayOfScripts = [
+            'https://code.jquery.com/jquery-3.6.0.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js',
+        ]
+        // array of library script if needed
+        const arrayOfCssLinks = [
+            'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css',
+        ]
+        const expectedLoopCount = 1; // default value 1 for no loop
+        const totalAnimationTimeCount = 11000 // without loop, total second count like 12 second = 12000. default 0.
+
+        const isApiUnit = false; // set true if any API fetched
+        const isCarouselUnit = false; // set true if any API fetched
+        // minified HTML with local path call
+        const htmlWithoutServerPath = ``;
+
+        // minified Css with local files call
+        const cssWithoutServerPath = ``;
+
+
+        // ---------------------------------------------------------------------
+        // Please dont try to change the below code if you  are not a developer
+        // ---------------------------------------------------------------------
+        const additionalScript = () => {
+            // -----------------------------------------
+            // write additional code/script within this block
+            if (isApiUnit) {
+                fetchApiAndRenderData();
+            }
+            if (isCarouselUnit) {}
+
+        }
+        // multiple time animation loop handling function
+        const refreshBanner = () => {
+            console.log('refresh')
+            var container = parent.document.getElementById(bannerWrapperName);
+            // var content = container.innerHTML;
+            var content = htmlWithoutServerPath
+                .replaceAll('src="', `src="${awServerPath}`)
+                .replaceAll(`src='`, `src='${awServerPath}`);
+            if (container.innerHTML = content) {
+                additionalScript();
+            }
+        }
+
+        const fetchApiAndRenderData = async () => {}
+
+        const setLoopOfbannerAnimation = () => {
+            return new Promise((resolve, reject) => {
+                if (expectedLoopCount > 1) {
+                    for (let i = 1; i < expectedLoopCount; i++) {
+                        setTimeout(() => { refreshBanner() }, totalAnimationTimeCount * i)
+                        expectedLoopCount === i + 1 && resolve();
+                    }
+                } else {
+                    resolve()
+                }
+            })
+        }
+
+        const formatAndInjectBanner = async () => {
+            const awWebsiteNav = parent.document.querySelector(".page-subnav");
+            const websiteHead = parent.document.head || parent.document.getElementsByTagName('head')[0];
+            // if no server path add this css
+            !awServerPath && websiteHead.insertAdjacentHTML('afterend', `<style>*{ padding: 0; margin: 0;}body{background:#ebebeb;}</style>`);
+
+            // css append/inject method
+            const injectCss = (formatedCss) => {
+                const bannerStyle = parent.document.createElement('style');
+                bannerStyle.type = 'text/css';
+                if (bannerStyle.styleSheet) {
+                    bannerStyle.styleSheet.cssText = formatedCss;
+                } else {
+                    bannerStyle.appendChild(parent.document.createTextNode(formatedCss));
+                }
+                return websiteHead.appendChild(bannerStyle);
+            }
+            // HTML append/inject method
+            const injectHTML = (formatedHTML) => {
+                let ele = document.createElement("div");
+                ele.className = bannerWrapperName;
+                ele.id = bannerWrapperName;
+                ele.innerHTML = formatedHTML;
+                return awWebsiteNav.parentNode.insertBefore(ele, awWebsiteNav.nextSibling);
+            }
+
+            // clickTag add method
+            const addClickTag = () => {
+                const ClickTag = parent.document.getElementById(clickTagOnElementID);
+                const formatedClickTagURL = awServerPath ? clickTagURL : clickTagURL.replaceAll('%%CLICK_URL_UNESC%%', '');
+                ClickTag.onclick = () => {
+                    window.open(formatedClickTagURL, '_blank');
+                };
+            };
+            // library scripts CDN inject/append method
+            const injectScriptLibrary = async (librarySrcs) => {
+                return new Promise(async (resolve, reject) => {
+                    let myPromise = (scriptSrc) => new Promise((resolve, reject) => {
+                        let scriptElement = document.createElement("script");
+                        scriptElement.type = 'text/javascript';
+                        scriptElement.src = scriptSrc;
+                        websiteHead.appendChild(scriptElement)
+                        scriptElement.onload = function () {
+                            resolve(scriptSrc)
+                        }
+                    })
+
+                    for (let index = 0; index < librarySrcs.length; index++) {
+                        let result = await myPromise(librarySrcs[index])
+                        if (result === librarySrcs[librarySrcs.length - 1]) {
+                            resolve(result)
+                        }
+                    }
+                })
+            };
+
+            // Css library CDN inject/append method
+            const injectCssLibrary = (librarySrcs) => {
+                return new Promise(async (resolve, reject) => {
+                    let cssLinkPromise = (linkRef) => new Promise((resolve, reject) => {
+                        let cssLinkElement = document.createElement("link");
+                        cssLinkElement.rel = 'stylesheet';
+                        cssLinkElement.href = linkRef;
+                        websiteHead.appendChild(cssLinkElement)
+                        cssLinkElement.onload = function () {
+                            resolve(linkRef)
+                        }
+                    })
+
+                    for (let index = 0; index < librarySrcs.length; index++) {
+                        let linkAppendResult = await cssLinkPromise(librarySrcs[index])
+                        if (linkAppendResult === librarySrcs[librarySrcs.length - 1]) {
+                            resolve(linkAppendResult)
+                        }
+                    }
+                })
+            };
+
+            try {
+                const callInjectScriptLibrary = await injectScriptLibrary(arrayOfScripts);
+                const callInjectCssLibrary = await injectCssLibrary(arrayOfCssLinks);
+                // format minified HTML with serverPath
+                const htmlWithServerPath = await htmlWithoutServerPath
+                    .replaceAll('src="', `src="${awServerPath}`)
+                    .replaceAll(`src='`, `src='${awServerPath}`)
+                    .replaceAll(`poster="`, `poster="${awServerPath}`)
+                    .replaceAll(`poster='`, `poster='${awServerPath}`);
+                // format minified CSS with serverPath
+                const cssWithServerPath = await cssWithoutServerPath
+                    .replaceAll(`url(`, `url(${awServerPath}`)
+                    .replaceAll(`url('`, `url('${awServerPath}`)
+                    .replaceAll(`url("`, `url("${awServerPath}`)
+                    .replaceAll(`@import url(${awServerPath}`, `@import url(`)
+                    .replaceAll(`@import url("${awServerPath}`, `@import url("`)
+                    .replaceAll(`@import url('${awServerPath}`, `@import url('`);
+                // inject CSS
+                const callInjectCss = await injectCss(cssWithServerPath)
+                // preparing loader images list
+                const collectImageFromCss = await cssWithoutServerPath.match(/[\w-]+\.(jpg|png|jpeg|gif)/g);
+                const collectImageFromHtml = await htmlWithoutServerPath.match(/[\w-]+\.(jpg|png|jpeg|gif)/g);
+                const allImageArrayWithoutServerPath = await ((collectImageFromCss, collectImageFromHtml) => { return [...new Set(collectImageFromHtml ? collectImageFromCss?.concat(collectImageFromHtml) : collectImageFromCss)] })(collectImageFromCss, collectImageFromHtml);
+                const awBannerImageArrayWithPath = await allImageArrayWithoutServerPath?.map(image => awServerPath + image);
+                // call image Loader and inject HTML
+                const loadImagesAndInjectHTML = await ((loaderImages) => {
+                    let uploadImagesCount = 0;
+                    return new Promise((resolve, reject) => {
+                        loaderImages.forEach((imgSrc) => {
+                            let newImgTag = parent.document.createElement('img');
+                            newImgTag.src = imgSrc;
+                            newImgTag.addEventListener('load', () => {
+                                newImgTag.remove();
+                                uploadImagesCount++;
+                                if (loaderImages.length == uploadImagesCount) {
+                                    // console.log(loaderImages)
+                                    //  resolve(injectCss(cssWithServerPath))
+                                    resolve(injectHTML(htmlWithServerPath))
+                                }
+                            });
+                        });
+                    })
+                })(awBannerImageArrayWithPath);
+
+                // call click Tag adder method
+                const callAddClickTag = await ((injectedHtml) => {
+                    // console.log(injectedHtml)
+                    return addClickTag()
+                })(loadImagesAndInjectHTML)
+                const loadAditionalScript = await additionalScript();
+                const callSetLoopOfbannerAnimation = await setLoopOfbannerAnimation()
+
+                await (() => {
+                    // set local html title name not AW site
+                    !parent.document.title && (parent.document.title = unitLineItemName.replaceAll('_', ' '));
+                    // check the screen to load the banner again
+                    parent.window.addEventListener('resize', function (event) {
+                        var newWidth = parent.window.innerWidth;
+                        var newHeight = parent.window.innerHeight;
+                        if (newWidth === 1024 || newWidth === 768 || newWidth === 414 || newWidth === 375 || newWidth === 360 || newWidth === 320) {
+                            return parent.location.reload();
+                        }
+                    });
+                    // additional code add below if needed
+                    // -----------------------------------
+
+                })()
+
+            } catch (error) {
+                console.log(error)
+            }
+        } // formatAndInjectBanner method end
+
+        // call inject banner method
+        formatAndInjectBanner();
+    </noscript>
+    <noscript id="bannerStandardScript">
+        // click tag url
+        const clickTagURL = `%%CLICK_URL_UNESC%%https://www.google.com/`;
+
+        const unitLineItemName = ``
+        // server path variable. 
+        const awServerPath = ``; //set empty for local path
+        // banner Wrapper element name
+        const bannerWrapperName = `banner-item`;
+        // click tag applied element ID
+        const clickTagOnElementID = `banner-item`;
+
+        // minified HTML with local path call
+        const htmlWithoutServerPath = ``;
+
+        // minified Css with local files call
+        const cssWithoutServerPath = ``;
+
+        // ---------------------------------------------------------------------
+        // Please dont try to change the below code if you  are not a developer
+        // ---------------------------------------------------------------------
+        const additionalScript = () => { }
+
+        const formatAndInjectBanner = async () => {
+            const awWebsiteNav = parent.document.querySelector(".page-subnav");
+            const websiteHead = parent.document.head || parent.document.getElementsByTagName('head')[0];
+            // if no server path add this css
+            !awServerPath && websiteHead.insertAdjacentHTML('afterend', `<style>*{ padding: 0; margin: 0;}body{background:#ebebeb;}</style>`);
+
+            // css append/inject method
+            const injectCss = (formatedCss) => {
+                const bannerStyle = parent.document.createElement('style');
+                bannerStyle.type = 'text/css';
+                if (bannerStyle.styleSheet) {
+                    bannerStyle.styleSheet.cssText = formatedCss;
+                } else {
+                    bannerStyle.appendChild(parent.document.createTextNode(formatedCss));
+                }
+                return websiteHead.appendChild(bannerStyle);
+            }
+            // HTML append/inject method
+            const injectHTML = (formatedHTML) => {
+                let ele = document.createElement("div");
+                ele.className = bannerWrapperName;
+                ele.id = bannerWrapperName;
+                ele.innerHTML = formatedHTML;
+                return awWebsiteNav.parentNode.insertBefore(ele, awWebsiteNav.nextSibling);
+            }
+
+            // clickTag add method
+            const addClickTag = () => {
+                const ClickTag = parent.document.getElementById(clickTagOnElementID);
+                const formatedClickTagURL = awServerPath ? clickTagURL : clickTagURL.replaceAll('%%CLICK_URL_UNESC%%', '');
+                ClickTag.onclick = () => {
+                    window.open(formatedClickTagURL, '_blank');
+                };
+            };
+
+            try {
+                // format minified HTML with serverPath
+                const htmlWithServerPath = await htmlWithoutServerPath
+                    .replaceAll('src="', `src="${awServerPath}`)
+                    .replaceAll(`src='`, `src='${awServerPath}`)
+                    .replaceAll(`poster="`, `poster="${awServerPath}`)
+                    .replaceAll(`poster='`, `poster='${awServerPath}`);
+                // format minified CSS with serverPath
+                const cssWithServerPath = await cssWithoutServerPath
+                    .replaceAll(`url(`, `url(${awServerPath}`)
+                    .replaceAll(`url('`, `url('${awServerPath}`)
+                    .replaceAll(`url("`, `url("${awServerPath}`)
+                    .replaceAll(`@import url(${awServerPath}`, `@import url(`)
+                    .replaceAll(`@import url("${awServerPath}`, `@import url("`)
+                    .replaceAll(`@import url('${awServerPath}`, `@import url('`);
+                // inject CSS
+                const callInjectCss = await injectCss(cssWithServerPath)
+                // preparing loader images list
+                const collectImageFromCss = await cssWithoutServerPath.match(/[\w-]+\.(jpg|png|jpeg|gif)/g);
+                const collectImageFromHtml = await htmlWithoutServerPath.match(/[\w-]+\.(jpg|png|jpeg|gif)/g);
+                const allImageArrayWithoutServerPath = await ((collectImageFromCss, collectImageFromHtml) => { return [...new Set(collectImageFromHtml ? collectImageFromCss?.concat(collectImageFromHtml) : collectImageFromCss)] })(collectImageFromCss, collectImageFromHtml);
+                const awBannerImageArrayWithPath = await allImageArrayWithoutServerPath?.map(image => awServerPath + image);
+                // call image Loader and inject HTML
+                const loadImagesAndInjectHTML = await ((loaderImages) => {
+                    let uploadImagesCount = 0;
+                    return new Promise((resolve, reject) => {
+                        loaderImages.forEach((imgSrc) => {
+                            let newImgTag = parent.document.createElement('img');
+                            newImgTag.src = imgSrc;
+                            newImgTag.addEventListener('load', () => {
+                                newImgTag.remove();
+                                uploadImagesCount++;
+                                if (loaderImages.length == uploadImagesCount) {
+                                    resolve(injectHTML(htmlWithServerPath))
+                                }
+                            });
+                        });
+                    })
+                })(awBannerImageArrayWithPath);
+
+                // call click Tag adder method
+                const callAddClickTag = await ((injectedHtml) => {
+                    // console.log(injectedHtml)
+                    return addClickTag()
+                })(loadImagesAndInjectHTML)
+                const loadAditionalScript = await additionalScript();
+
+                await (() => {
+                    // set local html title name not AW site
+                    !parent.document.title && (parent.document.title = unitLineItemName.replaceAll('_', ' '));
+                    // check the screen to load the banner again
+                    parent.window.addEventListener('resize', function (event) {
+                        var newWidth = parent.window.innerWidth;
+                        var newHeight = parent.window.innerHeight;
+                        if (newWidth === 1024 || newWidth === 768 || newWidth === 414 || newWidth === 375 || newWidth === 360 || newWidth === 320) {
+                            return parent.location.reload();
+                        }
+                    });
+                    // additional code add below if needed
+                    // -----------------------------------
+
+                })()
+
+            } catch (error) {
+                console.log(error)
+            }
+        } // formatAndInjectBanner method end
+
+        // call inject banner method
+        formatAndInjectBanner();
+    </noscript>
+    <noscript id="bannerWithAnimationWithoutCarouselScript">
+        // click tag url
+        const clickTagURL = `%%CLICK_URL_UNESC%%https://www.google.com/`;
+       
+        const unitLineItemName = ``
+        // server path variable. 
+        const awServerPath = ``; //set empty for local path
+        // banner Wrapper element name
+        const bannerWrapperName = `banner-item`;
+        // click tag applied element ID
+        const clickTagOnElementID = `banner-item`;
+       
+        const expectedLoopCount = 1; // default value 1 for no loop
+        const totalAnimationTimeCount = 11000 // without loop, total second count like 12 second = 12000. default 0.
+       
+        const isApiUnit = true; // set true if any API fetched
+        // minified HTML with local path call
+        const htmlWithoutServerPath = ``;
+       
+        // minified Css with local files call
+        const cssWithoutServerPath = ``;
+       
+        // ---------------------------------------------------------------------
+        // Please dont try to change the below code if you  are not a developer
+        // ---------------------------------------------------------------------
+        const additionalScript = () => {
+            if (isApiUnit) {
+                fetchApiAndRenderData();
+            }
+       
+        }
+        // multiple time animation loop handling function
+        const refreshBanner = () => {
+            console.log('refresh')
+            var container = parent.document.getElementById(bannerWrapperName);
+            // var content = container.innerHTML;
+            var content = htmlWithoutServerPath
+                .replaceAll('src="', `src="${awServerPath}`)
+                .replaceAll(`src='`, `src='${awServerPath}`);
+            if (container.innerHTML = content) {
+                additionalScript();
+            }
+        }
+       
+        const fetchApiAndRenderData = async () => {}
+       
+        const setLoopOfbannerAnimation = () => {
+            return new Promise((resolve, reject) => {
+                if (expectedLoopCount > 1) {
+                    for (let i = 1; i < expectedLoopCount; i++) {
+                        setTimeout(() => { refreshBanner() }, totalAnimationTimeCount * i)
+                        expectedLoopCount === i + 1 && resolve();
+                    }
+                } else {
+                    resolve()
+                }
+            })
+        }
+       
+        const formatAndInjectBanner = async () => {
+            const awWebsiteNav = parent.document.querySelector(".page-subnav");
+            const websiteHead = parent.document.head || parent.document.getElementsByTagName('head')[0];
+            // if no server path add this css
+            !awServerPath && websiteHead.insertAdjacentHTML('afterend', `<style>*{ padding: 0; margin: 0;}body{background:#ebebeb;}</style>`);
+       
+            // css append/inject method
+            const injectCss = (formatedCss) => {
+                const bannerStyle = parent.document.createElement('style');
+                bannerStyle.type = 'text/css';
+                if (bannerStyle.styleSheet) {
+                    bannerStyle.styleSheet.cssText = formatedCss;
+                } else {
+                    bannerStyle.appendChild(parent.document.createTextNode(formatedCss));
+                }
+                return websiteHead.appendChild(bannerStyle);
+            }
+            // HTML append/inject method
+            const injectHTML = (formatedHTML) => {
+                let ele = document.createElement("div");
+                ele.className = bannerWrapperName;
+                ele.id = bannerWrapperName;
+                ele.innerHTML = formatedHTML;
+                return awWebsiteNav.parentNode.insertBefore(ele, awWebsiteNav.nextSibling);
+            }
+       
+            // clickTag add method
+            const addClickTag = () => {
+                const ClickTag = parent.document.getElementById(clickTagOnElementID);
+                const formatedClickTagURL = awServerPath ? clickTagURL : clickTagURL.replaceAll('%%CLICK_URL_UNESC%%', '');
+                ClickTag.onclick = () => {
+                    window.open(formatedClickTagURL, '_blank');
+                };
+            };
+       
+            try {
+                // format minified HTML with serverPath
+                const htmlWithServerPath = await htmlWithoutServerPath
+                    .replaceAll('src="', `src="${awServerPath}`)
+                    .replaceAll(`src='`, `src='${awServerPath}`)
+                    .replaceAll(`poster="`, `poster="${awServerPath}`)
+                    .replaceAll(`poster='`, `poster='${awServerPath}`);
+                // format minified CSS with serverPath
+                const cssWithServerPath = await cssWithoutServerPath
+                    .replaceAll(`url(`, `url(${awServerPath}`)
+                    .replaceAll(`url('`, `url('${awServerPath}`)
+                    .replaceAll(`url("`, `url("${awServerPath}`)
+                    .replaceAll(`@import url(${awServerPath}`, `@import url(`)
+                    .replaceAll(`@import url("${awServerPath}`, `@import url("`)
+                    .replaceAll(`@import url('${awServerPath}`, `@import url('`);
+                // inject CSS
+                const callInjectCss = await injectCss(cssWithServerPath)
+                // preparing loader images list
+                const collectImageFromCss = await cssWithoutServerPath.match(/[\w-]+\.(jpg|png|jpeg|gif)/g);
+                const collectImageFromHtml = await htmlWithoutServerPath.match(/[\w-]+\.(jpg|png|jpeg|gif)/g);
+                const allImageArrayWithoutServerPath = await ((collectImageFromCss, collectImageFromHtml) => { return [...new Set(collectImageFromHtml ? collectImageFromCss?.concat(collectImageFromHtml) : collectImageFromCss)] })(collectImageFromCss, collectImageFromHtml);
+                const awBannerImageArrayWithPath = await allImageArrayWithoutServerPath?.map(image => awServerPath + image);
+                // call image Loader and inject HTML
+                const loadImagesAndInjectHTML = await ((loaderImages) => {
+                    let uploadImagesCount = 0;
+                    return new Promise((resolve, reject) => {
+                        loaderImages.forEach((imgSrc) => {
+                            let newImgTag = parent.document.createElement('img');
+                            newImgTag.src = imgSrc;
+                            newImgTag.addEventListener('load', () => {
+                                newImgTag.remove();
+                                uploadImagesCount++;
+                                if (loaderImages.length == uploadImagesCount) {
+                                    resolve(injectHTML(htmlWithServerPath))
+                                }
+                            });
+                        });
+                    })
+                })(awBannerImageArrayWithPath);
+       
+                // call click Tag adder method
+                const callAddClickTag = await ((injectedHtml) => {
+                    // console.log(injectedHtml)
+                    return addClickTag()
+                })(loadImagesAndInjectHTML)
+                const loadAditionalScript = await additionalScript();
+                const callSetLoopOfbannerAnimation = await setLoopOfbannerAnimation()
+       
+                await (() => {
+                    // set local html title name not AW site
+                    !parent.document.title && (parent.document.title = unitLineItemName.replaceAll('_', ' '));
+                    // check the screen to load the banner again
+                    parent.window.addEventListener('resize', function (event) {
+                        var newWidth = parent.window.innerWidth;
+                        var newHeight = parent.window.innerHeight;
+                        if (newWidth === 1024 || newWidth === 768 || newWidth === 414 || newWidth === 375 || newWidth === 360 || newWidth === 320) {
+                            return parent.location.reload();
+                        }
+                    });
+                    // additional code add below if needed
+                    // -----------------------------------
+       
+                })()
+       
+            } catch (error) {
+                console.log(error)
+            }
+        } // formatAndInjectBanner method end
+       
+        // call inject banner method
+        formatAndInjectBanner();
+    </noscript>
+    <noscript id="scaleIndexApiDefault">
+        // Scale index API
+        let apiKey = `103cf8ebc1de4830a8b773a59680a59d`
+        let cityCode = parent?.currentLocation?.key ? parent?.currentLocation?.key : `347936`;
+        let apiUrl = `https://api.accuweather.com/indices/v1/daily/5day/${cityCode}/17?apikey=${apiKey}&details=true`
+        let renderInClassName = `.apiDataArea`
+       
+        // set fetch api data in template
+        const dataInTemplate = ((data, renderInClass) => {
+            // console.log(data)
+            let size = 2;
+            let selectedData = data.slice(0, size)
+            let template = selectedData.map((item, index) => {
+                let value = Math.trunc(item.Value)
+                let maxLengthOfText = 90
+                let formateText = item.Text.length > maxLengthOfText ? item.Text.substring(0, maxLengthOfText) + "..." : item.Text;
+                // console.log(item.Text)
+       
+                // console.log(item)
+                return `<div class="single">
+                            <div class="wrapSVG">
+                            <ul class="scale C1 active">
+                                ${value > 9 ? `<li style="background:#00a7e1"></li>` : `<li></li>`}
+                                ${value > 8 ? `<li style="background:#00a7e1"></li>` : `<li></li>`}
+                                ${value > 7 ? `<li style="background:#00a7e1"></li>` : `<li></li>`}
+                                ${value > 6 ? `<li style="background:#00a7e1"></li>` : `<li></li>`}
+                                ${value > 5 ? `<li style="background:#00a7e1"></li>` : `<li></li>`}
+                                ${value > 4 ? `<li style="background:#00a7e1"></li>` : `<li></li>`}
+                                ${value > 3 ? `<li style="background:#00a7e1"></li>` : `<li></li>`}
+                                ${value > 2 ? `<li style="background:#00a7e1"></li>` : `<li></li>`}
+                                ${value > 1 ? `<li style="background:#00a7e1"></li>` : `<li></li>`}
+                                ${value > 0 ? `<li style="background:#00a7e1"></li>` : `<li></li>`}
+                            </ul>
+                            </div>
+                            <div class="details">
+                            <p class="module-header">${index > 0 ? "Tomorrow" : "Today"}</p>
+                            <h6>${item.Category}</h6>  <span>${formateText}</span>
+                            </div>
+                        </div>
+                        `
+            }).join("");
+            if (selectedData) {
+                render(template, parent.document.querySelector(renderInClass));
+       
+            }
+        });
+        // render template in selected node
+        let render = function (template, givenNode) {
+            if (template && givenNode) {
+                givenNode.innerHTML = template;
+            } else {
+                console.log('Given node missing')
+            }
+        };
+        // fetch api data
+        const fetchApiData = async (url) => {
+            let response = await fetch(url);
+            if (response.ok) {
+                let jsonData = await response.json();
+                return jsonData
+            } else {
+                console.log('error' + response.status);
+            }
+        };
+        // Main method for loading data with template inside specific div
+        try {
+            const response = await fetchApiData(apiUrl);
+            await dataInTemplate(response, renderInClassName)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    </noscript>
+    <noscript id="currentWeatherApiDefault">
+        // current weather API
+        let apiKey = '103cf8ebc1de4830a8b773a59680a59d'
+        let cityCode = '342720';
+        let apiUrl = `https://api.accuweather.com/currentconditions/v1/${cityCode}.json?apikey=${apiKey}&details=true`
+        let renderInClassName = '#apiDataArea'
+
+        // set fetch api data in template
+        const dataInTemplate = ((data, renderInClass) => {
+            let selectedData = data[0]
+            // let template = `<div id='mWebCopyBG'></div><div class='copy'><span class='temperatureValue'>${selectedData}</span><sup class='unit'>&#8457;</sup></div><div id='logoBG'></div>`
+            let template = `<div class='weatherText'>${selectedData?.WeatherText}</div><div class='weatherIcon'><img class="weatherIcon" src='https://www.accuweather.com/images/weathericons/${selectedData?.WeatherIcon}.svg' alt=""></div><div class='temperature'><div class='temperatureValue'>${selectedData?.Temperature.Imperial.Value}</div><div class='degree'>&#176;</div><div class='unit'>${selectedData?.Temperature.Imperial.Unit}</div></div><div class="realfeelText">RealFeel® ${selectedData?.RealFeelTemperature.Imperial.Value}<span>&#176;</span></div>`
+
+            if (selectedData) {
+                render(template, parent.document.querySelector(renderInClass));
+            }
+        });
+        // render template in selected node
+        let render = function (template, givenNode) {
+            givenNode.innerHTML = template;
+        };
+        // fetch api data
+        const fetchApiData = async (url) => {
+            let response = await fetch(url);
+            if (response.ok) {
+                let jsonData = await response.json();
+                return jsonData
+            } else {
+                console.log('error' + response.status);
+            }
+        };
+
+        // Main method for loading data with template inside specific div
+        try {
+            const response = await fetchApiData(apiUrl);
+            await dataInTemplate(response, renderInClassName)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    </noscript>
+    <noscript id="carouselDefaultScript">
+        parent.$('#awGlobalBnrWrapper .owl-carousel').owlCarousel({
+            // rtl: true,
+            // center: true,
+            smartSpeed: 1200,
+            //items: 1,
+            //margin: 13,
+            nav: true,
+            // navText: ['<span class='arrow arrow-left'></span>','<span class='arrow arrow-right'></span>'],
+            //dots: false,
+            //animateOut: 'fadeOut',
+            //animateIn: 'fadeIn'
+            margin: 0,
+            loop: true,
+            autoWidth: true,
+            items: 1
+        })
+    </noscript>
+    <noscript id="defaultHtmlForBasicScript">
+        <div id='awGlobalBnrWrapper'>
+            <div id='awBnrCreativeContent'></div>
+        </div>
+    </noscript>
+    <noscript id="defaultCssForBasicScript">
+        #awGlobalBnrWrapper {
+            background: url(desktop_bg.png);
+            background-position: center !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            width: 100%;
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
+            margin-bottom: 16px;
+            margin-top: 0;
+            cursor: pointer
+        }
+
+        #awGlobalBnrWrapper #awBnrCreativeContent {
+            width: 960px;
+            height: 300px;
+            margin: 0 auto;
+            background: url(desktop_content.png);
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            position: relative;
+            top: 0;
+            overflow-x: hidden;
+            z-index: 0
+        }
+
+        #awGlobalBnrWrapper #awBnrCreativeContent:hover {
+            cursor: pointer
+        }
+
+        @media(max-width:979px) {
+            #awGlobalBnrWrapper {
+                margin-bottom: 16px;
+                margin-top: 0;
+                height: 300px;
+                background: url(iPad_bg.png)
+            }
+
+            #awGlobalBnrWrapper #awBnrCreativeContent {
+                position: relative;
+                width: 768px;
+                height: 300px;
+                top: 0;
+                right: 0;
+                background: url(iPad_content.png)
+            }
+        }
+
+        @media (max-width:767px) {
+            #awGlobalBnrWrapper {
+                margin-bottom: 12px;
+                margin-top: 0;
+                height: 250px;
+                background: url(iPhone_bg.png);
+            }
+
+            #awGlobalBnrWrapper #awBnrCreativeContent {
+                background: url(iPhone_content.png);
+                height: 250px;
+                width: 100%;
+                margin: 0 auto;
+                top: 0;
+                max-width: 414px;
+            }
+        }
+
+        @media(max-width:360px) {
+            #awGlobalBnrWrapper #awBnrCreativeContent {
+                background-size: contain;
+                width: 100%;
+            }
+        }
+
+        @media(max-width:320px) {
+            #awGlobalBnrWrapper #awBnrCreativeContent {
+                width: 100%;
+                background-size: contain;
+            }
+
+        }
+    </noscript>
+    <noscript id="defaultHTMLForCarouselScript">
+        <div id='awGlobalBnrWrapper'>
+            <div id='awInnerBnrWrapper'>
+                <div id='awBnrCreativeContent'>
+                </div>
+            </div>
+            <div class='carouselWrapper'>
+                <div class='productsWrap'>
+                  <div class='owl-carousel'><a target='_blank'
+                      href='https://www.familydollar.com/twin-size-embossed-velvet-plush-blankets/FD500453/' class='item'><img
+                        src='product1.png'></a><a target='_blank'
+                      href='https://www.familydollar.com/just-be-assorted-ladies-microfiber-terry-clog-slippers-size-m/FD899507/'
+                      class='item'><img src='product2.png'></a><a target='_blank'
+                      href='https://www.amazon.com/Cromoncent-Women-Casual-Flannel-Lounge/dp/B01N1TCUNC/ref=sr_1_11?crid=3QVTG38TGW8SX&dchild=1&keywords=fuzzy+pajama+pants&qid=1633984731&sprefix=fuzzy+pajama+%2Caps%2C175&sr=8-11/'
+                      class='item'><img src='product3.png'></a><a target='_blank'
+                      href='https://www.amazon.com/C-C-Unisex-Anti-Slip-Touchscreen-Texting/dp/B0789W67KP/ref=sr_1_7?dchild=1&keywords=fuzzy+gloves&qid=1633984694&sr=8-7/'
+                      class='item'><img src='product4.png'></a><a target='_blank'
+                      href='https://www.amazon.com/Pairs-Socks-Fluffy-Winter-Slipper/dp/B09BHQ2S4Y/ref=sr_1_63?dchild=1&keywords=fuzzy+socks&qid=1633984659&sr=8-63/'
+                      class='item'><img src='product5.png'></a></div>
+                </div>
+              </div>
+        </div>
+    </noscript>
+    <noscript id="defaultCssForCarouselScript">
+        #awGlobalBnrWrapper {
+            background: url(desktop_bg.png);
+            background-position: center !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            width: 100%;
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
+            margin-bottom: 16px;
+            margin-top: 0;
+            cursor: pointer
+        }
+
+        #awGlobalBnrWrapper #awBnrCreativeContent {
+            width: 960px;
+            height: 300px;
+            margin: 0 auto;
+            background: url(desktop_content.png);
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            position: relative;
+            top: 0;
+            overflow-x: hidden;
+            z-index: 0
+        }
+
+        #awGlobalBnrWrapper #awBnrCreativeContent:hover {
+            cursor: pointer
+        }
+
+        @media(max-width:979px) {
+            #awGlobalBnrWrapper {
+                margin-bottom: 16px;
+                margin-top: 0;
+                height: 300px;
+                background: url(iPad_bg.png)
+            }
+
+            #awGlobalBnrWrapper #awBnrCreativeContent {
+                position: relative;
+                width: 768px;
+                height: 300px;
+                top: 0;
+                right: 0;
+                background: url(iPad_content.png)
+            }
+        }
+
+        @media (max-width:767px) {
+            #awGlobalBnrWrapper {
+                margin-bottom: 12px;
+                margin-top: 0;
+                height: 250px;
+                background: url(iPhone_bg.png);
+            }
+
+            #awGlobalBnrWrapper #awBnrCreativeContent {
+                background: url(iPhone_content.png);
+                height: 250px;
+                width: 100%;
+                margin: 0 auto;
+                top: 0;
+                max-width: 414px;
+            }
+        }
+
+        @media(max-width:360px) {
+            #awGlobalBnrWrapper #awBnrCreativeContent {
+                background-size: contain;
+                width: 100%;
+            }
+        }
+
+        @media(max-width:320px) {
+            #awGlobalBnrWrapper #awBnrCreativeContent {
+                width: 100%;
+                background-size: contain;
+            }
+
+        }
+
+        /*  */
+
+        #awGlobalBnrWrapper .carouselWrapper {
+            /* transform: translate(-482px,27px); */
+            transform: translate(-421px, 21px);
+            border: 5px solid RGB(253, 254, 255, 0.5);
+            border-radius: 10px;
+            box-sizing: content-box;
+        }
+
+        #awGlobalBnrWrapper .carouselWrapper,
+        #awGlobalBnrWrapper .productsWrap,
+        #awGlobalBnrWrapper .owl-carousel .owl-stage-outer,
+        #awGlobalBnrWrapper .owl-carousel .owl-item,
+        #awGlobalBnrWrapper .owl-carousel .owl-item a {
+            width: 248px;
+            height: 248px;
+        }
+
+        #awGlobalBnrWrapper .owl-next,
+        #awGlobalBnrWrapper .owl-prev {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            margin-top: -20px;
+        }
+
+        #awGlobalBnrWrapper .owl-prev {
+            left: -57px
+        }
+
+        #awGlobalBnrWrapper .owl-next {
+            right: -57px
+        }
+
+        /* ----- */
+        #awGlobalBnrWrapper .carouselWrapper {
+            position: absolute;
+            left: 50%;
+            top: 0;
+        }
+
+        #awGlobalBnrWrapper .productsWrap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        #awGlobalBnrWrapper .owl-carousel .owl-stage-outer {
+            margin-top: 0px;
+        }
+
+        #awGlobalBnrWrapper .owl-carousel .owl-item {
+            margin-top: 0
+        }
+
+        #awGlobalBnrWrapper .owl-carousel .owl-item a {
+            display: block;
+            margin-right: 0;
+            margin-top: 0
+        }
+
+        #awGlobalBnrWrapper .owl-carousel .owl-item img {
+            width: auto;
+            margin: 0 auto
+        }
+
+        #awGlobalBnrWrapper .owl-next,
+        #awGlobalBnrWrapper .owl-prev {
+            position: absolute;
+            top: 50%;
+            background: url(arrow.png) no-repeat;
+            background-size: contain;
+            opacity: 1;
+            transition: .5s
+        }
+
+        #awGlobalBnrWrapper .owl-nav button:active,
+        #awGlobalBnrWrapper .owl-nav button:focus {
+            outline: 0
+        }
+
+        #awGlobalBnrWrapper .owl-nav button span {
+            display: none
+        }
+
+        #awGlobalBnrWrapper .owl-prev {
+            -webkit-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            transform: rotate(180deg)
+        }
+
+
+
+        #awGlobalBnrWrapper .no-js .owl-carousel,
+        .owl-carousel.owl-loaded {
+            height: inherit;
+        }
+
+        @media(max-width:979px) {
+            #awGlobalBnrWrapper .carouselWrapper,
+            #awGlobalBnrWrapper .productsWrap,
+            #awGlobalBnrWrapper .owl-carousel .owl-stage-outer,
+            #awGlobalBnrWrapper .owl-carousel .owl-item,
+            #awGlobalBnrWrapper .owl-carousel .owl-item a {
+                width: 173px;
+                height: 186px;
+            }
+            #awGlobalBnrWrapper .carouselWrapper {
+                transform: translate(145px, 52px);
+            }
+
+
+            #awGlobalBnrWrapper .owl-carousel .owl-stage-outer {
+                margin-top: 0px
+            }
+
+            #awGlobalBnrWrapper .owl-carousel .owl-item a {
+                display: block;
+                margin-right: 0;
+                margin-top: 0
+            }
+
+            #awGlobalBnrWrapper .owl-next,
+            #awGlobalBnrWrapper .owl-prev {
+                width: 33px;
+                height: 33px;
+                margin-top: -16px;
+                
+            }
+
+            #awGlobalBnrWrapper .owl-prev {
+                left: -50px
+            }
+
+            #awGlobalBnrWrapper .owl-next {
+                right: -50px
+            }
+        }
+
+        @media (max-width:420px) {
+
+            #awGlobalBnrWrapper .carouselWrapper {
+                transform: translate(53px, 48px);
+                border: 5px solid RGB(253, 254, 255, 0.5);
+                border-radius: 8px;
+                box-sizing: content-box;
+            }
+
+            #awGlobalBnrWrapper .carouselWrapper,
+            #awGlobalBnrWrapper .owl-carousel .owl-stage-outer,
+            #awGlobalBnrWrapper .owl-carousel .owl-item a,
+            #awGlobalBnrWrapper .owl-carousel .owl-item img,
+            #awGlobalBnrWrapper .productsWrap {
+                width: 117px;
+                height: 117px;
+            }
+
+            #awGlobalBnrWrapper .owl-next,
+            #awGlobalBnrWrapper .owl-prev {
+                width: 19px;
+                height: 19px;
+                bottom: -35px;
+                top: auto;
+                margin-top: auto;
+            }
+
+            #awGlobalBnrWrapper .owl-prev {
+                left: 10%;
+            }
+
+            #awGlobalBnrWrapper .owl-next {
+                right: 10%;
+            }
+
+            /*  */
+            #awGlobalBnrWrapper .carouselWrapper {
+                position: absolute;
+                left: 50%;
+            }
+
+            #awGlobalBnrWrapper .productsWrap {
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: auto
+            }
+
+            #awGlobalBnrWrapper .owl-carousel .owl-stage-outer {
+                margin-top: 0px
+            }
+
+            #awGlobalBnrWrapper .owl-carousel .owl-item {
+                display: block;
+                margin-right: 0;
+                min-height: 117px;
+                margin-top: 0px;
+            }
+
+            #awGlobalBnrWrapper .owl-carousel .owl-item a {
+                display: block;
+                margin-right: 0;
+                margin-top: 0
+            }
+
+            #awGlobalBnrWrapper .owl-carousel .owl-item img {
+                margin: 0 auto;
+            }
+
+            #awGlobalBnrWrapper .owl-next,
+            #awGlobalBnrWrapper .owl-prev {
+                position: absolute;
+                background: url(arrow.png) no-repeat;
+                background-size: contain;
+                opacity: 1;
+                transition: .5s
+            }
+
+            #awGlobalBnrWrapper .owl-nav button:active,
+            #awGlobalBnrWrapper .owl-nav button:focus {
+                outline: 0
+            }
+
+            #awGlobalBnrWrapper .owl-nav button span {
+                display: none;
+            }
+
+            #awGlobalBnrWrapper .owl-prev {
+                -webkit-transform: rotate(180deg);
+                -ms-transform: rotate(180deg);
+                transform: rotate(180deg);
+            }
+        }
+
+        @media(max-width:375px) {
+            #awGlobalBnrWrapper .carouselWrapper {
+                transform: translate(43px, 48px);
+            }
+        }
+
+        @media(max-width:360px) {
+            #awGlobalBnrWrapper .carouselWrapper {
+                transform: translate(38px, 48px);
+            }
+        }
+
+        @media(max-width:320px) {
+            #awGlobalBnrWrapper .carouselWrapper {
+                transform: translate(28px, 48px);
+            }
+        }
+    </noscript>
+    <script src="./assets/js/index.js"></script>
+</body>
+
+</html>
