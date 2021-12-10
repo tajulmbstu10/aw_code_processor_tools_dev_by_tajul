@@ -1,0 +1,259 @@
+/* scaleIndexAPICss block */
+@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap);
+
+#awGlobalBnrWrapper .apiDataArea {
+    width: 100%;
+    max-width: 307px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    position: absolute;
+    left: 0px;
+    /* top: 140px; */
+    top: 10px;
+}
+
+.details {
+    margin-left: 5px
+}
+
+.single .details,
+.single .details h6,
+.single .details p,
+.single .details span {
+    font-family: Roboto, sans-serif;
+    color: #ffffff;
+    line-height: 14px
+}
+
+.wrapSVG {
+    position: relative;
+    width: 35px;
+    float: left
+}
+
+.wrapSVG span {
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    font-size: 15px
+}
+
+.single {
+    text-align: center;
+    overflow: hidden;
+    float: left;
+    padding: 0;
+    padding-right: 5px;
+    margin: 5px;
+    margin-left: 15px;
+    margin-bottom: 0px;
+}
+
+.single .details {
+    text-align: left;
+    margin-left: 10px
+}
+
+.single .details span {
+    overflow-y: scroll;
+    max-height: 60px;
+    scrollbar-width: thin;
+}
+
+.single img {
+    float: left;
+    display: block;
+    margin-bottom: 5px
+}
+
+.single p.module-header {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 5px
+}
+
+.single h6 {
+    margin: 11px 0 14px 0;
+    font-size: 18px;
+    font-weight: 700
+}
+
+.single>span {
+    float: left;
+    display: block;
+    width: 100%;
+    font-size: 14px
+}
+
+ul.scale {
+    padding: 0;
+    width: 28px;
+    list-style: none;
+    margin: 0
+}
+
+ul.scale li {
+    width: 100%;
+    background: #f8ef18;
+    margin-bottom: 5px;
+    height: 6px
+}
+
+.scale>li:nth-child(1) {
+    transition: all 5s ease
+}
+
+.scale>li:nth-child(2) {
+    transition: all 4.5s ease
+}
+
+.scale>li:nth-child(3) {
+    transition: all 4s ease
+}
+
+.scale>li:nth-child(4) {
+    transition: all 3.5s ease
+}
+
+.scale>li:nth-child(5) {
+    transition: all 3s ease
+}
+
+.scale>li:nth-child(6) {
+    transition: all 2.5s ease
+}
+
+.scale>li:nth-child(7) {
+    transition: all 2s ease
+}
+
+.scale>li:nth-child(8) {
+    transition: all 1.5s ease
+}
+
+.scale>li:nth-child(9) {
+    transition: all 1s ease
+}
+
+.scale>li:nth-child(10) {
+    transition: all .5s ease
+}
+
+.single .details span {
+    font-size: 13px;
+    line-height: 14px;
+    display: block;
+    overflow: hidden
+}
+
+@media(max-width:979px) {
+    #awGlobalBnrWrapper .apiDataArea {
+        width: 100%;
+        flex-direction: column;
+        left: 20px;
+        max-width: 243px;
+    }
+
+    .wrapSVG {
+        width: 30px
+    }
+
+    .single .details {
+        width: 195px
+    }
+
+    ul.scale li {
+        margin-bottom: 3px;
+        height: 6px
+    }
+
+    ul.scale {
+        width: 20px
+    }
+
+    .single p.module-header {
+        font-size: 13px;
+        margin-top: 3px
+    }
+
+    .single h6 {
+        font-size: 16px;
+        margin: 6px 0 6px 0
+    }
+
+    .single .details span {
+        font-size: 12px
+    }
+}
+
+@media(max-width:767px) {
+    #awGlobalBnrWrapper .apiDataArea {
+        flex-direction: column;
+        max-width: 165px;
+        top: 58px;
+        left: 50%;
+        transform: translateX(-205px);
+    }
+
+    ul.scale li {
+        margin-bottom: 3px;
+        height: 4px
+    }
+
+    .single {
+        margin-left: 10px;
+    }
+
+    .single .details {
+        width: 100%
+    }
+
+    ul.scale {
+        width: 19px
+    }
+
+    .single .details span {
+        line-height: 10px
+    }
+
+    .wrapSVG {
+        width: 24px
+    }
+
+    .single p.module-header {
+        font-size: 10px;
+        margin-top: 2px
+    }
+
+    .single h6 {
+        font-size: 12px;
+        margin: 3px 0 3px 0
+    }
+
+    .single .details span {
+        font-size: 9px
+    }
+}
+
+@media(max-width:375px) {
+    #awGlobalBnrWrapper .apiDataArea {
+        transform: translateX(-184px);
+    }
+}
+
+@media(max-width:360px) {
+    #awGlobalBnrWrapper .apiDataArea {
+        max-width: 140px;
+        transform: translateX(-178px);
+    }
+}
+
+@media(max-width:320px) {
+    #awGlobalBnrWrapper .apiDataArea {
+        transform: translateX(-155px);
+    }
+}
+
+/* scaleIndexAPICss block */

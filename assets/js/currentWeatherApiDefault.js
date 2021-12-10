@@ -1,6 +1,6 @@
 // current weather API
 let apiKey = '103cf8ebc1de4830a8b773a59680a59d'
-let cityCode = '342720';
+let cityCode = parent?.currentLocation?.key ? parent?.currentLocation?.key : `347936`;
 let apiUrl = `https://api.accuweather.com/currentconditions/v1/${cityCode}.json?apikey=${apiKey}&details=true`
 let renderInClassName = '#apiDataArea'
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> SEBPO AccuWeather Team Code PreProcessor </title>
+    <title> SEBPO AccuWeather Team Script PreProcessor </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- customized style -->
@@ -41,7 +41,7 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="scriptTypeRadioOptions" id="basicScript"
                                 value="basicScript" checked>
-                            <label class="form-check-label" for="inlineRadio1">Basic Script</label>
+                            <label class="form-check-label" for="inlineRadio1">Standard Script</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="scriptTypeRadioOptions"
@@ -56,6 +56,19 @@
                         <hr />
                         <div class="form-group">
                             <textarea class="form-control" id="carouselScriptInput" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group" id='animationData'>
+                        <div>
+                            <h3> Loop count</h3>
+                            <input type='number' class="form-control" id="loopCount" value='1'>
+                            <p class="helpertText">1 for No loop</p>
+                        </div>
+                        <div>
+                            <h3> Loop interval </h3>
+                            <input type='number' class="form-control" id="loopInterval" value='12000'>
+                            <p class="helpertText">12000 for 12 second</p>
+
                         </div>
                     </div>
                     <br />
@@ -89,6 +102,10 @@
                         <h3> Server Path (if any) </h3>
                         <input class="form-control" id="serverPath">
                     </div>
+                    <br />
+                    <div class="form-group" style="color: red;">
+                        <h5>Note: Please edit code if you want, once the above setup is done.</h5>
+                    </div>
                 </div>
                 <div>
                 </div>
@@ -97,6 +114,7 @@
                 <div class="form-group">
                     <!-- <h3> Prepared Script </h3> -->
                     <textarea class="form-control" id="output" rows="5"></textarea>
+                    
                 </div>
                 <br />
                 <button class="button btnFade btnBlueGreen" id="getResult" onclick="showResult()">Generate
@@ -111,7 +129,7 @@
             </div>
         </main>
         <footer class="footer">
-            tajulmbstu@gmail.com
+            Crated by Md. Tajul Islam - JavaScript Developer. SEBPO, Dhaka, Bangladesh.
         </footer>
     </div>
     <!-- scripts -->
@@ -119,7 +137,7 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <!-- customized script -->
-    <noscript id="bannerWithAnimationWithCarouselScript">
+    <noscript id="carouselScript">
         // click tag url
         const clickTagURL = `%%CLICK_URL_UNESC%%https://www.google.com/`;
 
@@ -345,7 +363,7 @@
         // call inject banner method
         formatAndInjectBanner();
     </noscript>
-    <noscript id="bannerStandardScript">
+    <noscript id="standardScript">
         // click tag url
         const clickTagURL = `%%CLICK_URL_UNESC%%https://www.google.com/`;
 
@@ -474,7 +492,7 @@
         // call inject banner method
         formatAndInjectBanner();
     </noscript>
-    <noscript id="bannerWithAnimationWithoutCarouselScript">
+    <noscript id="animationScript">
         // click tag url
         const clickTagURL = `%%CLICK_URL_UNESC%%https://www.google.com/`;
        
@@ -716,7 +734,7 @@
     <noscript id="currentWeatherApiDefault">
         // current weather API
         let apiKey = '103cf8ebc1de4830a8b773a59680a59d'
-        let cityCode = '342720';
+        let cityCode = parent?.currentLocation?.key ? parent?.currentLocation?.key : `347936`;
         let apiUrl = `https://api.accuweather.com/currentconditions/v1/${cityCode}.json?apikey=${apiKey}&details=true`
         let renderInClassName = '#apiDataArea'
 
@@ -778,6 +796,8 @@
         </div>
     </noscript>
     <noscript id="defaultCssForBasicScript">
+
+        /* standardCss block */
         #awGlobalBnrWrapper {
             background: url(desktop_bg.png);
             background-position: center !important;
@@ -859,6 +879,8 @@
             }
 
         }
+
+        /* standardCss block */
     </noscript>
     <noscript id="defaultHTMLForCarouselScript">
         <div id='awGlobalBnrWrapper'>
@@ -883,144 +905,590 @@
               </div>
         </div>
     </noscript>
-    <noscript id="defaultCssForCarouselScript">
-        #awGlobalBnrWrapper {
-            background: url(desktop_bg.png);
-            background-position: center !important;
-            background-size: cover !important;
-            background-repeat: no-repeat !important;
+    <noscript id='scaleIndexAPICss'>
+        /* scaleIndexAPICss block */
+        @import url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap);
+
+        #awGlobalBnrWrapper .apiDataArea {
             width: 100%;
-            height: 300px;
-            margin: 0 auto;
-            position: relative;
-            margin-bottom: 16px;
-            margin-top: 0;
-            cursor: pointer
+            max-width: 307px;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            position: absolute;
+            left: 0px;
+            /* top: 140px; */
+            top: 10px;
         }
 
-        #awGlobalBnrWrapper #awBnrCreativeContent {
-            width: 960px;
-            height: 300px;
-            margin: 0 auto;
-            background: url(desktop_content.png);
-            background-position: center !important;
-            background-repeat: no-repeat !important;
-            position: relative;
-            top: 0;
-            overflow-x: hidden;
-            z-index: 0
+        .details {
+            margin-left: 5px
         }
 
-        #awGlobalBnrWrapper #awBnrCreativeContent:hover {
-            cursor: pointer
+        .single .details,
+        .single .details h6,
+        .single .details p,
+        .single .details span {
+            font-family: Roboto, sans-serif;
+            color: #ffffff;
+            line-height: 14px
+        }
+
+        .wrapSVG {
+            position: relative;
+            width: 35px;
+            float: left
+        }
+
+        .wrapSVG span {
+            position: absolute;
+            top: 40px;
+            left: 50px;
+            font-size: 15px
+        }
+
+        .single {
+            text-align: center;
+            overflow: hidden;
+            float: left;
+            padding: 0;
+            padding-right: 5px;
+            margin: 5px;
+            margin-left: 15px;
+            margin-bottom: 0px;
+        }
+
+        .single .details {
+            text-align: left;
+            margin-left: 10px
+        }
+
+        .single .details span {
+            overflow-y: scroll;
+            max-height: 60px;
+            scrollbar-width: thin;
+        }
+
+        .single img {
+            float: left;
+            display: block;
+            margin-bottom: 5px
+        }
+
+        .single p.module-header {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 5px
+        }
+
+        .single h6 {
+            margin: 11px 0 14px 0;
+            font-size: 18px;
+            font-weight: 700
+        }
+
+        .single>span {
+            float: left;
+            display: block;
+            width: 100%;
+            font-size: 14px
+        }
+
+        ul.scale {
+            padding: 0;
+            width: 28px;
+            list-style: none;
+            margin: 0
+        }
+
+        ul.scale li {
+            width: 100%;
+            background: #f8ef18;
+            margin-bottom: 5px;
+            height: 6px
+        }
+
+        .scale>li:nth-child(1) {
+            transition: all 5s ease
+        }
+
+        .scale>li:nth-child(2) {
+            transition: all 4.5s ease
+        }
+
+        .scale>li:nth-child(3) {
+            transition: all 4s ease
+        }
+
+        .scale>li:nth-child(4) {
+            transition: all 3.5s ease
+        }
+
+        .scale>li:nth-child(5) {
+            transition: all 3s ease
+        }
+
+        .scale>li:nth-child(6) {
+            transition: all 2.5s ease
+        }
+
+        .scale>li:nth-child(7) {
+            transition: all 2s ease
+        }
+
+        .scale>li:nth-child(8) {
+            transition: all 1.5s ease
+        }
+
+        .scale>li:nth-child(9) {
+            transition: all 1s ease
+        }
+
+        .scale>li:nth-child(10) {
+            transition: all .5s ease
+        }
+
+        .single .details span {
+            font-size: 13px;
+            line-height: 14px;
+            display: block;
+            overflow: hidden
         }
 
         @media(max-width:979px) {
-            #awGlobalBnrWrapper {
-                margin-bottom: 16px;
-                margin-top: 0;
-                height: 300px;
-                background: url(iPad_bg.png)
+            #awGlobalBnrWrapper .apiDataArea {
+                width: 100%;
+                flex-direction: column;
+                left: 20px;
+                max-width: 243px;
             }
 
-            #awGlobalBnrWrapper #awBnrCreativeContent {
-                position: relative;
-                width: 768px;
-                height: 300px;
-                top: 0;
-                right: 0;
-                background: url(iPad_content.png)
+            .wrapSVG {
+                width: 30px
+            }
+
+            .single .details {
+                width: 195px
+            }
+
+            ul.scale li {
+                margin-bottom: 3px;
+                height: 6px
+            }
+
+            ul.scale {
+                width: 20px
+            }
+
+            .single p.module-header {
+                font-size: 13px;
+                margin-top: 3px
+            }
+
+            .single h6 {
+                font-size: 16px;
+                margin: 6px 0 6px 0
+            }
+
+            .single .details span {
+                font-size: 12px
             }
         }
 
-        @media (max-width:767px) {
-            #awGlobalBnrWrapper {
-                margin-bottom: 12px;
-                margin-top: 0;
-                height: 250px;
-                background: url(iPhone_bg.png);
+        @media(max-width:767px) {
+            #awGlobalBnrWrapper .apiDataArea {
+                flex-direction: column;
+                max-width: 165px;
+                top: 58px;
+                left: 50%;
+                transform: translateX(-205px);
             }
 
-            #awGlobalBnrWrapper #awBnrCreativeContent {
-                background: url(iPhone_content.png);
-                height: 250px;
-                width: 100%;
-                margin: 0 auto;
-                top: 0;
-                max-width: 414px;
+            ul.scale li {
+                margin-bottom: 3px;
+                height: 4px
+            }
+
+            .single {
+                margin-left: 10px;
+            }
+
+            .single .details {
+                width: 100%
+            }
+
+            ul.scale {
+                width: 19px
+            }
+
+            .single .details span {
+                line-height: 10px
+            }
+
+            .wrapSVG {
+                width: 24px
+            }
+
+            .single p.module-header {
+                font-size: 10px;
+                margin-top: 2px
+            }
+
+            .single h6 {
+                font-size: 12px;
+                margin: 3px 0 3px 0
+            }
+
+            .single .details span {
+                font-size: 9px
+            }
+        }
+
+        @media(max-width:375px) {
+            #awGlobalBnrWrapper .apiDataArea {
+                transform: translateX(-184px);
             }
         }
 
         @media(max-width:360px) {
-            #awGlobalBnrWrapper #awBnrCreativeContent {
-                background-size: contain;
-                width: 100%;
+            #awGlobalBnrWrapper .apiDataArea {
+                max-width: 140px;
+                transform: translateX(-178px);
             }
         }
 
         @media(max-width:320px) {
-            #awGlobalBnrWrapper #awBnrCreativeContent {
-                width: 100%;
-                background-size: contain;
+            #awGlobalBnrWrapper .apiDataArea {
+                transform: translateX(-155px);
+            }
+        }
+
+        /* scaleIndexAPICss block */
+
+    </noscript>
+    <noscript id='currentWeatherAPICss'>
+        /* currentWeatherAPICss block */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+        #awGlobalBnrWrapper .apiDataArea {
+            width: 100%;
+            height: 100%;
+            max-width: 280px;
+            max-height: 125px;
+            position: absolute;
+            left: 25px;
+            bottom: 30px;
+        }
+
+        #awGlobalBnrWrapper .weatherText {
+            font-family: 'Roboto', sans-serif !important;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            font-size: 20px;
+        }
+
+        #awGlobalBnrWrapper .weatherIcon {
+            position: absolute;
+            bottom: 0;
+            height: 100px;
+            width: 100px;
+            left: 38px;
+        }
+
+        #awGlobalBnrWrapper .temperature {
+            position: absolute;
+            bottom: 15px;
+            right: 0;
+        }
+
+        #awGlobalBnrWrapper .temperatureValue {
+            font-size: 65px;
+            font-weight: 700;
+            font-family: 'Roboto', sans-serif !important
+        }
+
+        #awGlobalBnrWrapper .unit {
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif !important;
+            position: absolute;
+            right: -16px;
+            bottom: 10px;
+        }
+
+        #awGlobalBnrWrapper .degree {
+            position: absolute;
+            top: 0px;
+            right: -24px;
+            vertical-align: super;
+            font-size: 70px;
+            font-family: 'Roboto', sans-serif !important;
+        }
+
+        #awGlobalBnrWrapper .realfeelText {
+            font-size: 15px;
+            font-family: 'Roboto', sans-serif !important;
+            position: absolute;
+            bottom: 0;
+            right: -20px;
+        }
+
+        @media (max-width:767px) {
+            #awGlobalBnrWrapper .apiDataArea {
+                max-width: 145px;
+                max-height: 55px;
+                left: 40px;
+                bottom: 10px;
             }
 
+            #awGlobalBnrWrapper .weatherText {
+                bottom: 0;
+                left: 0;
+                width: 35px;
+                font-size: 12px;
+            }
+
+            #awGlobalBnrWrapper .weatherIcon {
+                position: absolute;
+                bottom: 2px;
+                height: 48px;
+                width: 48px;
+                left: 20px;
+            }
+
+            #awGlobalBnrWrapper .temperature {
+                bottom: 5px;
+            }
+
+            #awGlobalBnrWrapper .temperatureValue {
+                font-size: 35px;
+            }
+
+            #awGlobalBnrWrapper .unit {
+                font-size: 9px;
+                font-family: 'Roboto', sans-serif !important;
+                position: absolute;
+                right: -8px;
+                bottom: 10px;
+            }
+
+            #awGlobalBnrWrapper .degree {
+                position: absolute;
+                right: -12px;
+                font-size: 35px;
+            }
+
+            #awGlobalBnrWrapper .realfeelText {
+                font-size: 10px;
+                bottom: 0;
+                right: -18px;
+            }
         }
 
-        /*  */
+        /* currentWeatherAPICss block */
+    </noscript>
+    <noscript id='carouselCss'>
+        
+    /* carouselCss block */
 
-        #awGlobalBnrWrapper .carouselWrapper {
-            /* transform: translate(-482px,27px); */
-            transform: translate(-421px, 21px);
-            border: 5px solid RGB(253, 254, 255, 0.5);
-            border-radius: 10px;
-            box-sizing: content-box;
-        }
+    #awGlobalBnrWrapper .carouselWrapper {
+        /* transform: translate(-482px,27px); */
+        transform: translate(-421px, 21px);
+        border: 5px solid RGB(253, 254, 255, 0.5);
+        border-radius: 10px;
+        box-sizing: content-box;
+    }
 
+    #awGlobalBnrWrapper .carouselWrapper,
+    #awGlobalBnrWrapper .productsWrap,
+    #awGlobalBnrWrapper .owl-carousel .owl-stage-outer,
+    #awGlobalBnrWrapper .owl-carousel .owl-item,
+    #awGlobalBnrWrapper .owl-carousel .owl-item a {
+        width: 248px;
+        height: 248px;
+    }
+
+    #awGlobalBnrWrapper .owl-next,
+    #awGlobalBnrWrapper .owl-prev {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        margin-top: -20px;
+    }
+
+    #awGlobalBnrWrapper .owl-prev {
+        left: -57px
+    }
+
+    #awGlobalBnrWrapper .owl-next {
+        right: -57px
+    }
+
+    /* ----- */
+    #awGlobalBnrWrapper .carouselWrapper {
+        position: absolute;
+        left: 50%;
+        top: 0;
+    }
+
+    #awGlobalBnrWrapper .productsWrap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    #awGlobalBnrWrapper .owl-carousel .owl-stage-outer {
+        margin-top: 0px;
+    }
+
+    #awGlobalBnrWrapper .owl-carousel .owl-item {
+        margin-top: 0
+    }
+
+    #awGlobalBnrWrapper .owl-carousel .owl-item a {
+        display: block;
+        margin-right: 0;
+        margin-top: 0
+    }
+
+    #awGlobalBnrWrapper .owl-carousel .owl-item img {
+        width: auto;
+        margin: 0 auto
+    }
+
+    #awGlobalBnrWrapper .owl-next,
+    #awGlobalBnrWrapper .owl-prev {
+        position: absolute;
+        top: 50%;
+        background: url(arrow.png) no-repeat;
+        background-size: contain;
+        opacity: 1;
+        transition: .5s
+    }
+
+    #awGlobalBnrWrapper .owl-nav button:active,
+    #awGlobalBnrWrapper .owl-nav button:focus {
+        outline: 0
+    }
+
+    #awGlobalBnrWrapper .owl-nav button span {
+        display: none
+    }
+
+    #awGlobalBnrWrapper .owl-prev {
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg)
+    }
+
+
+
+    #awGlobalBnrWrapper .no-js .owl-carousel,
+    .owl-carousel.owl-loaded {
+        height: inherit;
+    }
+
+    @media(max-width:979px) {
         #awGlobalBnrWrapper .carouselWrapper,
         #awGlobalBnrWrapper .productsWrap,
         #awGlobalBnrWrapper .owl-carousel .owl-stage-outer,
         #awGlobalBnrWrapper .owl-carousel .owl-item,
         #awGlobalBnrWrapper .owl-carousel .owl-item a {
-            width: 248px;
-            height: 248px;
+            width: 173px;
+            height: 186px;
+        }
+        #awGlobalBnrWrapper .carouselWrapper {
+            transform: translate(145px, 52px);
+        }
+
+
+        #awGlobalBnrWrapper .owl-carousel .owl-stage-outer {
+            margin-top: 0px
+        }
+
+        #awGlobalBnrWrapper .owl-carousel .owl-item a {
+            display: block;
+            margin-right: 0;
+            margin-top: 0
         }
 
         #awGlobalBnrWrapper .owl-next,
         #awGlobalBnrWrapper .owl-prev {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            margin-top: -20px;
+            width: 33px;
+            height: 33px;
+            margin-top: -16px;
+            
         }
 
         #awGlobalBnrWrapper .owl-prev {
-            left: -57px
+            left: -50px
         }
 
         #awGlobalBnrWrapper .owl-next {
-            right: -57px
+            right: -50px
+        }
+    }
+
+    @media (max-width:420px) {
+
+        #awGlobalBnrWrapper .carouselWrapper {
+            transform: translate(53px, 48px);
+            border: 5px solid RGB(253, 254, 255, 0.5);
+            border-radius: 8px;
+            box-sizing: content-box;
         }
 
-        /* ----- */
+        #awGlobalBnrWrapper .carouselWrapper,
+        #awGlobalBnrWrapper .owl-carousel .owl-stage-outer,
+        #awGlobalBnrWrapper .owl-carousel .owl-item a,
+        #awGlobalBnrWrapper .owl-carousel .owl-item img,
+        #awGlobalBnrWrapper .productsWrap {
+            width: 117px;
+            height: 117px;
+        }
+
+        #awGlobalBnrWrapper .owl-next,
+        #awGlobalBnrWrapper .owl-prev {
+            width: 19px;
+            height: 19px;
+            bottom: -35px;
+            top: auto;
+            margin-top: auto;
+        }
+
+        #awGlobalBnrWrapper .owl-prev {
+            left: 10%;
+        }
+
+        #awGlobalBnrWrapper .owl-next {
+            right: 10%;
+        }
+
+        /*  */
         #awGlobalBnrWrapper .carouselWrapper {
             position: absolute;
             left: 50%;
-            top: 0;
         }
 
         #awGlobalBnrWrapper .productsWrap {
             position: absolute;
             left: 0;
             right: 0;
-            margin: auto;
+            margin: auto
         }
 
         #awGlobalBnrWrapper .owl-carousel .owl-stage-outer {
-            margin-top: 0px;
+            margin-top: 0px
         }
 
         #awGlobalBnrWrapper .owl-carousel .owl-item {
-            margin-top: 0
+            display: block;
+            margin-right: 0;
+            min-height: 117px;
+            margin-top: 0px;
         }
 
         #awGlobalBnrWrapper .owl-carousel .owl-item a {
@@ -1030,14 +1498,12 @@
         }
 
         #awGlobalBnrWrapper .owl-carousel .owl-item img {
-            width: auto;
-            margin: 0 auto
+            margin: 0 auto;
         }
 
         #awGlobalBnrWrapper .owl-next,
         #awGlobalBnrWrapper .owl-prev {
             position: absolute;
-            top: 50%;
             background: url(arrow.png) no-repeat;
             background-size: contain;
             opacity: 1;
@@ -1050,174 +1516,37 @@
         }
 
         #awGlobalBnrWrapper .owl-nav button span {
-            display: none
+            display: none;
         }
 
         #awGlobalBnrWrapper .owl-prev {
             -webkit-transform: rotate(180deg);
             -ms-transform: rotate(180deg);
-            transform: rotate(180deg)
+            transform: rotate(180deg);
         }
+    }
 
-
-
-        #awGlobalBnrWrapper .no-js .owl-carousel,
-        .owl-carousel.owl-loaded {
-            height: inherit;
+    @media(max-width:375px) {
+        #awGlobalBnrWrapper .carouselWrapper {
+            transform: translate(43px, 48px);
         }
+    }
 
-        @media(max-width:979px) {
-            #awGlobalBnrWrapper .carouselWrapper,
-            #awGlobalBnrWrapper .productsWrap,
-            #awGlobalBnrWrapper .owl-carousel .owl-stage-outer,
-            #awGlobalBnrWrapper .owl-carousel .owl-item,
-            #awGlobalBnrWrapper .owl-carousel .owl-item a {
-                width: 173px;
-                height: 186px;
-            }
-            #awGlobalBnrWrapper .carouselWrapper {
-                transform: translate(145px, 52px);
-            }
-
-
-            #awGlobalBnrWrapper .owl-carousel .owl-stage-outer {
-                margin-top: 0px
-            }
-
-            #awGlobalBnrWrapper .owl-carousel .owl-item a {
-                display: block;
-                margin-right: 0;
-                margin-top: 0
-            }
-
-            #awGlobalBnrWrapper .owl-next,
-            #awGlobalBnrWrapper .owl-prev {
-                width: 33px;
-                height: 33px;
-                margin-top: -16px;
-                
-            }
-
-            #awGlobalBnrWrapper .owl-prev {
-                left: -50px
-            }
-
-            #awGlobalBnrWrapper .owl-next {
-                right: -50px
-            }
+    @media(max-width:360px) {
+        #awGlobalBnrWrapper .carouselWrapper {
+            transform: translate(38px, 48px);
         }
+    }
 
-        @media (max-width:420px) {
-
-            #awGlobalBnrWrapper .carouselWrapper {
-                transform: translate(53px, 48px);
-                border: 5px solid RGB(253, 254, 255, 0.5);
-                border-radius: 8px;
-                box-sizing: content-box;
-            }
-
-            #awGlobalBnrWrapper .carouselWrapper,
-            #awGlobalBnrWrapper .owl-carousel .owl-stage-outer,
-            #awGlobalBnrWrapper .owl-carousel .owl-item a,
-            #awGlobalBnrWrapper .owl-carousel .owl-item img,
-            #awGlobalBnrWrapper .productsWrap {
-                width: 117px;
-                height: 117px;
-            }
-
-            #awGlobalBnrWrapper .owl-next,
-            #awGlobalBnrWrapper .owl-prev {
-                width: 19px;
-                height: 19px;
-                bottom: -35px;
-                top: auto;
-                margin-top: auto;
-            }
-
-            #awGlobalBnrWrapper .owl-prev {
-                left: 10%;
-            }
-
-            #awGlobalBnrWrapper .owl-next {
-                right: 10%;
-            }
-
-            /*  */
-            #awGlobalBnrWrapper .carouselWrapper {
-                position: absolute;
-                left: 50%;
-            }
-
-            #awGlobalBnrWrapper .productsWrap {
-                position: absolute;
-                left: 0;
-                right: 0;
-                margin: auto
-            }
-
-            #awGlobalBnrWrapper .owl-carousel .owl-stage-outer {
-                margin-top: 0px
-            }
-
-            #awGlobalBnrWrapper .owl-carousel .owl-item {
-                display: block;
-                margin-right: 0;
-                min-height: 117px;
-                margin-top: 0px;
-            }
-
-            #awGlobalBnrWrapper .owl-carousel .owl-item a {
-                display: block;
-                margin-right: 0;
-                margin-top: 0
-            }
-
-            #awGlobalBnrWrapper .owl-carousel .owl-item img {
-                margin: 0 auto;
-            }
-
-            #awGlobalBnrWrapper .owl-next,
-            #awGlobalBnrWrapper .owl-prev {
-                position: absolute;
-                background: url(arrow.png) no-repeat;
-                background-size: contain;
-                opacity: 1;
-                transition: .5s
-            }
-
-            #awGlobalBnrWrapper .owl-nav button:active,
-            #awGlobalBnrWrapper .owl-nav button:focus {
-                outline: 0
-            }
-
-            #awGlobalBnrWrapper .owl-nav button span {
-                display: none;
-            }
-
-            #awGlobalBnrWrapper .owl-prev {
-                -webkit-transform: rotate(180deg);
-                -ms-transform: rotate(180deg);
-                transform: rotate(180deg);
-            }
+    @media(max-width:320px) {
+        #awGlobalBnrWrapper .carouselWrapper {
+            transform: translate(28px, 48px);
         }
+    }
 
-        @media(max-width:375px) {
-            #awGlobalBnrWrapper .carouselWrapper {
-                transform: translate(43px, 48px);
-            }
-        }
+    /* carouselCss block */
 
-        @media(max-width:360px) {
-            #awGlobalBnrWrapper .carouselWrapper {
-                transform: translate(38px, 48px);
-            }
-        }
 
-        @media(max-width:320px) {
-            #awGlobalBnrWrapper .carouselWrapper {
-                transform: translate(28px, 48px);
-            }
-        }
     </noscript>
     <script src="./assets/js/index.js"></script>
 </body>

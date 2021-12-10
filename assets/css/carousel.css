@@ -1,86 +1,5 @@
-#awGlobalBnrWrapper {
-    background: url(desktop_bg.png);
-    background-position: center !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    width: 100%;
-    height: 300px;
-    margin: 0 auto;
-    position: relative;
-    margin-bottom: 16px;
-    margin-top: 0;
-    cursor: pointer
-}
 
-#awGlobalBnrWrapper #awBnrCreativeContent {
-    width: 960px;
-    height: 300px;
-    margin: 0 auto;
-    background: url(desktop_content.png);
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    position: relative;
-    top: 0;
-    overflow-x: hidden;
-    z-index: 0
-}
-
-#awGlobalBnrWrapper #awBnrCreativeContent:hover {
-    cursor: pointer
-}
-
-@media(max-width:979px) {
-    #awGlobalBnrWrapper {
-        margin-bottom: 16px;
-        margin-top: 0;
-        height: 300px;
-        background: url(iPad_bg.png)
-    }
-
-    #awGlobalBnrWrapper #awBnrCreativeContent {
-        position: relative;
-        width: 768px;
-        height: 300px;
-        top: 0;
-        right: 0;
-        background: url(iPad_content.png)
-    }
-}
-
-@media (max-width:767px) {
-    #awGlobalBnrWrapper {
-        margin-bottom: 12px;
-        margin-top: 0;
-        height: 250px;
-        background: url(iPhone_bg.png);
-    }
-
-    #awGlobalBnrWrapper #awBnrCreativeContent {
-        background: url(iPhone_content.png);
-        height: 250px;
-        width: 100%;
-        margin: 0 auto;
-        top: 0;
-        max-width: 414px;
-    }
-}
-
-@media(max-width:360px) {
-    #awGlobalBnrWrapper #awBnrCreativeContent {
-        background-size: contain;
-        width: 100%;
-    }
-}
-
-@media(max-width:320px) {
-    #awGlobalBnrWrapper #awBnrCreativeContent {
-        width: 100%;
-        background-size: contain;
-    }
-
-}
-
-/*  */
+/* carouselCss block */
 
 #awGlobalBnrWrapper .carouselWrapper {
     /* transform: translate(-482px,27px); */
@@ -332,3 +251,6 @@
         transform: translate(28px, 48px);
     }
 }
+
+/* carouselCss block */
+

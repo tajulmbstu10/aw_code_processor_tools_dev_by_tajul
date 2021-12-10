@@ -1,0 +1,120 @@
+/* currentWeatherAPICss block */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+#awGlobalBnrWrapper .apiDataArea {
+    width: 100%;
+    height: 100%;
+    max-width: 280px;
+    max-height: 125px;
+    position: absolute;
+    left: 25px;
+    bottom: 30px;
+}
+
+#awGlobalBnrWrapper .weatherText {
+    font-family: 'Roboto', sans-serif !important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 70px;
+    font-size: 20px;
+}
+
+#awGlobalBnrWrapper .weatherIcon {
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+    width: 100px;
+    left: 38px;
+}
+
+#awGlobalBnrWrapper .temperature {
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+}
+
+#awGlobalBnrWrapper .temperatureValue {
+    font-size: 65px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif !important
+}
+
+#awGlobalBnrWrapper .unit {
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif !important;
+    position: absolute;
+    right: -16px;
+    bottom: 10px;
+}
+
+#awGlobalBnrWrapper .degree {
+    position: absolute;
+    top: 0px;
+    right: -24px;
+    vertical-align: super;
+    font-size: 70px;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+#awGlobalBnrWrapper .realfeelText {
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif !important;
+    position: absolute;
+    bottom: 0;
+    right: -20px;
+}
+
+@media (max-width:767px) {
+    #awGlobalBnrWrapper .apiDataArea {
+        max-width: 145px;
+        max-height: 55px;
+        left: 40px;
+        bottom: 10px;
+    }
+
+    #awGlobalBnrWrapper .weatherText {
+        bottom: 0;
+        left: 0;
+        width: 35px;
+        font-size: 12px;
+    }
+
+    #awGlobalBnrWrapper .weatherIcon {
+        position: absolute;
+        bottom: 2px;
+        height: 48px;
+        width: 48px;
+        left: 20px;
+    }
+
+    #awGlobalBnrWrapper .temperature {
+        bottom: 5px;
+    }
+
+    #awGlobalBnrWrapper .temperatureValue {
+        font-size: 35px;
+    }
+
+    #awGlobalBnrWrapper .unit {
+        font-size: 9px;
+        font-family: 'Roboto', sans-serif !important;
+        position: absolute;
+        right: -8px;
+        bottom: 10px;
+    }
+
+    #awGlobalBnrWrapper .degree {
+        position: absolute;
+        right: -12px;
+        font-size: 35px;
+    }
+
+    #awGlobalBnrWrapper .realfeelText {
+        font-size: 10px;
+        bottom: 0;
+        right: -18px;
+    }
+}
+
+/* currentWeatherAPICss block */
